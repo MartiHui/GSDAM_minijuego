@@ -1,13 +1,15 @@
 #include <QColor>
+#include <QDebug>
 #include <cstdlib>
 
 #include "color.h"
 
 Color::Color() {
-    setRandomColor();
+    colorRgb_.setRgb(255, 255, 255);
 }
 
 void Color::setToRed() {
+    qDebug() << "entrando en setToRed";
     colorRgb_.setRgb(255, 0, 0);
     colorName_ = Color::RED;
 }

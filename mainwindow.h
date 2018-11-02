@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPaintEvent>
+#include <QMouseEvent>
+
+#include "ball.h"
 
 namespace Ui {
 class MainWindow;

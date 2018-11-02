@@ -29,13 +29,15 @@ SOURCES += \
         mainwindow.cpp \
     ball.cpp \
     basket.cpp \
-    color.cpp
+    color.cpp \
+    canvas.cpp
 
 HEADERS += \
         mainwindow.h \
     ball.h \
     basket.h \
-    color.h
+    color.h \
+    canvas.h
 
 FORMS += \
         mainwindow.ui
