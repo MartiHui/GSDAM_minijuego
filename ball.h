@@ -1,13 +1,13 @@
 #ifndef BALL_H
 #define BALL_H
 
-#include <QWidget>
+
 #include <QRectF>
 #include <QColor>
 
-class Ball : public QWidget
+class Ball
 {
-    Q_OBJECT
+
 private:
     QRectF hitbox_ {0.0, 0.0, 45.0, 45.0};
     QRectF ellipse_ {0.0, 0.0, 65.0, 65.0};
@@ -15,15 +15,12 @@ private:
 public:
     QColor color_;
 
-    explicit Ball(QWidget *parent = nullptr);
+    Ball();
     void changeColor();
     QRectF getHitbox(int posX, int posY);
     QRectF getEllipse(int posX, int posY);
 
 
-signals:
-
-public slots:
 };
 
 #endif // BALL_H

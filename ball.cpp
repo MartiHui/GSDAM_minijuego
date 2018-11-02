@@ -1,6 +1,6 @@
 #include "ball.h"
 
-Ball::Ball(QWidget *parent) : QWidget(parent)
+Ball::Ball()
 {
     changeColor();
 }
