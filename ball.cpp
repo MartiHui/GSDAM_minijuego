@@ -6,11 +6,19 @@ Ball::Ball(QWidget *parent) : QWidget(parent)
 }
 
 void Ball::changeColor() {
-    color_.setRandomColor();
-}
+    switch(std::rand() % 3) {
+    case 0:
+        color_.setRgb(255, 0, 0);
+        break;
 
-Color Ball::getColor() {
-    return color_;
+    case 1:
+        color_.setRgb(0, 255, 0);
+        break;
+
+    case 2:
+        color_.setRgb(0, 0, 255);
+        break;
+    }
 }
 
 QRectF Ball::getHitbox(int posX, int posY) {

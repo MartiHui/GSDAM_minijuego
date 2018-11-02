@@ -3,20 +3,19 @@
 
 #include <QWidget>
 #include <QRectF>
-
-#include "color.h"
+#include <QColor>
 
 class Basket : public QWidget
 {
     Q_OBJECT
 private:
-    Color color_;
     QRectF rect_ {0.0, 0.0, 50.0, 50.0};
 
 public:
+    QColor color_;
+
     explicit Basket(QWidget *parent = nullptr);
     void setRandomPosition(int width, int height);
-    Color getColor();
     QRectF getRect();
 
 signals:
