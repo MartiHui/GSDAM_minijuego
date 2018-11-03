@@ -8,8 +8,6 @@
 
 Canvas::Canvas(QWidget *parent) : QWidget(parent)
 {
-    setMouseTracking(true);
-
     ball_ = new Ball();
 
     basketList_[0] = new Basket();
@@ -25,42 +23,19 @@ Canvas::Canvas(QWidget *parent) : QWidget(parent)
 }
 
 void Canvas::changeBasketsPositions() {
-    /*for (int i = 0; i < 3; i++) {
-        qDebug() << "b1";
+    for (int i = 0; i < 3; i++) {
         bool correctPosition = true;
         do {
-            qDebug() << "b2";
             basketList_[i]->setRandomPosition(800, 700);
-            if (basketList_[i]->getRect().intersects(ball_->getHitbox(mouseX_, mouseY_))) {
-                qDebug() << "b3";
-                correctPosition = false;
-            } else {
-                qDebug() << "b4" << i << " ";
-                for (int j = 0; j < 3; j++)
-                {
-                    qDebug() << "w";
-                }
-
-
-                for (int j = 0; j < i-1; j++) {
-                    qDebug() << "b5";
-                    qDebug() << "i: " << i << "J: " << j;
-                    if (basketList_[i]->getRect().intersects(basketList_[j]->getRect())) {
-
-                        qDebug() << "b6";
-                        correctPosition = false;
-                        break;
-                    }
-                }
-
-
-
-            }
-            qDebug() << "b7";
+            for (int j = 0; j < i; j++) {
+                if (basketList_[i]->getRect().intersects(basketList_[j]->getRect())) {
+                    correctPosition = false;
+                    break;
+                } else {
+                    correctPosition = true;
+                } // end if
+            } // end for
         } while (!correctPosition);
-    }*/
-    for (int i = 0; i < 3; i++) {
-        basketList_[i]->setRandomPosition(800, 700);
     }
 }
 
@@ -76,8 +51,6 @@ void Canvas::paintEvent(QPaintEvent *) {
         painter.setBrush(brush);
 
         painter.drawRect(basketList_[i]->getRect());
-        //qDebug() << basketList_[i]->getRect();
-        //qDebug() << basketList_[i]->getColor().getColorRgb();
     }
 
     QBrush brush(ball_->color_);
@@ -97,16 +70,18 @@ void Canvas::mouseMoveEvent(QMouseEvent *event) {
                 puntuacion_ -= 100;
             }
 
-            info_->setText(QString::number(puntuacion_));
+            updatePuntuacion();
 
             ball_->changeColor();
-            qDebug() << "a42";
 
             changeBasketsPositions();
-            qDebug() << "a5";
 
         }
     }
 
     repaint();
+}
+
+void Canvas::updatePuntuacion() {
+    info_->setText("Puntos: " + QString::number(puntuacion_));
 }

@@ -18,6 +18,7 @@ public:
 
     explicit Canvas(QWidget *parent = nullptr);
     void changeBasketsPositions();
+    void updatePuntuacion();
 
 protected:
     virtual void paintEvent(QPaintEvent *event);

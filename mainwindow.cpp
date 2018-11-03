@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->widget->info_ = ui->widget->findChild<QLabel *>();
+    ui->widget->updatePuntuacion();
 }
 
 MainWindow::~MainWindow()
