@@ -2,17 +2,16 @@
 
 #include "basket.h"
 
-Basket::Basket()
-{
-
-}
-
+// Asigna al objeto una posición aleatoria dentro de la pantalla
+// Parametros:
+//      width : anchura de la ventana
+//      height : altura de la ventana
 void Basket::setRandomPosition(int width, int height) {
     int posX = std::rand() % width;
     int posY = std::rand() % height;
-    rect_.setRect(posX, posY, rect_.width(), rect_.height());
+    m_rect.setRect(posX, posY, m_rect.width(), m_rect.height());
 }
 
 QRectF Basket::getRect() {
-    return rect_;
+    return m_rect;
 }

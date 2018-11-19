@@ -8,7 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->widget->info_ = ui->widget->findChild<QLabel *>();
+    // Tenemos que indicar al widget donde esta la etiqueta DESPUÉS de ser creada
+    ui->widget->m_info = ui->widget->findChild<QLabel *>();
     ui->widget->updatePuntuacion();
 }
 

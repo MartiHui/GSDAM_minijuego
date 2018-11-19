@@ -9,12 +9,12 @@
 #include "ball.h"
 #include "basket.h"
 
-class Canvas : public QWidget
-{
+// Widget propio para mostrar el juego
+class Canvas : public QWidget {
     Q_OBJECT
 public:
-    int puntuacion_ {0};
-    QLabel *info_;
+    int m_puntuacion {0}; // Puntuación actual del jugador
+    QLabel *m_info; // Etiqueta para mostrar la puntuación
 
     explicit Canvas(QWidget *parent = nullptr);
     void changeBasketsPositions();
@@ -25,10 +25,10 @@ protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
 
 private:
-    Ball *ball_;
-    Basket *basketList_[3];
-    int mouseX_ {0};
-    int mouseY_ {0};
+    Ball *m_ball;
+    Basket *m_basketList[3]; // Lista con todos los rectángulos de la partida
+    int m_mouseX {0};
+    int m_mouseY {0};
 };
 
 #endif // CANVAS_H

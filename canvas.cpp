@@ -6,29 +6,32 @@
 
 #include "canvas.h"
 
-Canvas::Canvas(QWidget *parent) : QWidget(parent)
-{
-    ball_ = new Ball();
+Canvas::Canvas(QWidget *parent) : QWidget(parent) {
+    m_ball = new Ball();
 
-    basketList_[0] = new Basket();
-    basketList_[0]->color_.setRgb(255, 0, 0);
+    // Creamos tres canastas de tres colores diferentes
+    m_basketList[0] = new Basket();
+    m_basketList[0]->m_color.setRgb(255, 0, 0);
 
-    basketList_[1] = new Basket();
-    basketList_[1]->color_.setRgb(0, 255, 0);
+    m_basketList[1] = new Basket();
+    m_basketList[1]->m_color.setRgb(0, 255, 0);
 
-    basketList_[2] = new Basket();
-    basketList_[2]->color_.setRgb(0, 0, 255);
+    m_basketList[2] = new Basket();
+    m_basketList[2]->m_color.setRgb(0, 0, 255);
 
+    // Posicionamos las canastas en la ventana
     changeBasketsPositions();
 }
 
+
+// Cambiamos la posición de todas las canastas, comprobando que no se solapan entre ellas
 void Canvas::changeBasketsPositions() {
     for (int i = 0; i < 3; i++) {
         bool correctPosition = true;
         do {
-            basketList_[i]->setRandomPosition(800, 700);
+            m_basketList[i]->setRandomPosition(800, 700);
             for (int j = 0; j < i; j++) {
-                if (basketList_[i]->getRect().intersects(basketList_[j]->getRect())) {
+                if (m_basketList[i]->getRect().intersects(m_basketList[j]->getRect())) {
                     correctPosition = false;
                     break;
                 } else {
@@ -40,48 +43,54 @@ void Canvas::changeBasketsPositions() {
 }
 
 void Canvas::paintEvent(QPaintEvent *) {
-    QPen pen(QColor(0, 0, 0, 255));
+    QPen pen(QColor(0, 0, 0, 255)); // Para dibujar un borde en todo lo que dibujemos
     pen.setWidth(2);
     QPainter painter(this);
     painter.setPen(pen);
     //painter.drawRect(ball_->getHitbox(mouseX_, mouseY_));
 
+    // Dibujar las canastas
     for (int i = 0; i < 3; i++) {
-        QBrush brush(basketList_[i]->color_);
+        QBrush brush(m_basketList[i]->m_color); // Para rellenar el rectángulo
         painter.setBrush(brush);
 
-        painter.drawRect(basketList_[i]->getRect());
+        painter.drawRect(m_basketList[i]->getRect());
     }
 
-    QBrush brush(ball_->color_);
+    // Dibujar la pelota
+    QBrush brush(m_ball->m_color);
     painter.setBrush(brush);
-    painter.drawEllipse(ball_->getEllipse(mouseX_, mouseY_));
+    painter.drawEllipse(m_ball->getEllipse(m_mouseX, m_mouseY));
 }
 
+// Cuando movemos el ratón comprobamos si hemos tocado una canasta. En caso afirmativo,
+// si es del mismo color se le aumenta la puntuación, de lo contrario, se le resta
 void Canvas::mouseMoveEvent(QMouseEvent *event) {
-    mouseX_ = event->x();
-    mouseY_ = event->y();
+    m_mouseX = event->x();
+    m_mouseY = event->y();
 
     for (int i = 0; i < 3; i++) {
-        if (ball_->getHitbox(mouseX_, mouseY_).intersects(basketList_[i]->getRect())) {
-            if (ball_->color_ == basketList_[i]->color_) {
-                puntuacion_++;
+        if (m_ball->getHitbox(m_mouseX, m_mouseY).intersects(m_basketList[i]->getRect())) {
+            if (m_ball->m_color == m_basketList[i]->m_color) {
+                m_puntuacion++;
             } else {
-                puntuacion_ -= 100;
+                m_puntuacion -= 100;
             }
 
             updatePuntuacion();
 
-            ball_->changeColor();
+            m_ball->changeColor();
 
-            changeBasketsPositions();
+            changeBasketsPositions(); // Recolocamos las canastas
 
+            break;
         }
     }
 
     repaint();
 }
 
+// Modificamos la etiqueta para que muestre la puntuación correcta
 void Canvas::updatePuntuacion() {
-    info_->setText("Puntos: " + QString::number(puntuacion_));
+    m_info->setText("Puntos: " + QString::number(m_puntuacion));
 }
